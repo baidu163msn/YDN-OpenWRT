@@ -1,17 +1,27 @@
 # ==========================================
-# 1. 目标平台锁定 (雅典娜)
+# 【核心修复】开启多设备全量编译 (防止设备ID不匹配)
 # ==========================================
 CONFIG_TARGET_qualcommax=y
 CONFIG_TARGET_qualcommax_ipq60xx=y
-CONFIG_TARGET_MULTI_PROFILE=n
-CONFIG_TARGET_PER_DEVICE_ROOTFS=n
-CONFIG_TARGET_DEVICE_qualcommax_ipq60xx_DEVICE_jdcloud_re-cs-02=y
-CONFIG_TARGET_DEVICE_qualcommax_ipq60xx_DEVICE_jdcloud_ax6600=y
+# 【关键】：开启多设备编译，把 ipq60xx 下所有设备（包括雅典娜）全编一遍
+CONFIG_TARGET_MULTI_PROFILE=y
+CONFIG_TARGET_PER_DEVICE_ROOTFS=y
+# 【关键】：同时开启两种固件格式，确保无论什么设备都有文件输出
 CONFIG_TARGET_ROOTFS_SQUASHFS=y
-CONFIG_TARGET_ROOTFS_INITRAMFS=n
+CONFIG_TARGET_ROOTFS_INITRAMFS=y
 
 # ==========================================
-# 2. 基础编译参数与高通 IPQ60XX 优化
+# 【防冲突补丁】(剔除互斥包)
+# ==========================================
+# CONFIG_PACKAGE_luci-light is not set
+# CONFIG_PACKAGE_wpad-basic-mbedtls is not set
+# CONFIG_PACKAGE_wpad-basic-wolfssl is not set
+# CONFIG_PACKAGE_wpad-basic is not set
+# CONFIG_PACKAGE_dnsmasq is not set
+# CONFIG_PACKAGE_firewall is not set
+
+# ==========================================
+# 1. 基础编译参数与高通 IPQ60XX 优化
 # ==========================================
 CONFIG_CCACHE=y
 CONFIG_KERNEL_CC_OPTIMIZE_FOR_PERFORMANCE=y
@@ -19,7 +29,7 @@ CONFIG_ATH11K_MEM_PROFILE_1G=y
 CONFIG_IPQ_MEM_PROFILE_1024=y
 
 # ==========================================
-# 3. 科学插件与主题 (纯净添加)
+# 2. 科学插件与主题
 # ==========================================
 CONFIG_PACKAGE_luci-app-openclash=y
 CONFIG_PACKAGE_luci-app-passwall=y
@@ -28,7 +38,7 @@ CONFIG_PACKAGE_luci-theme-argon=y
 CONFIG_PACKAGE_luci-app-argon-config=y
 
 # ==========================================
-# 4. 雅典娜专属硬件支持 (LED & eMMC)
+# 3. 雅典娜专属硬件支持 (LED & eMMC)
 # ==========================================
 CONFIG_PACKAGE_luci-app-athena-led=y
 CONFIG_PACKAGE_athena-led-control=y
@@ -42,14 +52,14 @@ CONFIG_PACKAGE_fdisk=y
 CONFIG_PACKAGE_cfdisk=y
 
 # ==========================================
-# 5. 增强的 WIFI 功能 (精简排雷版：交由 target 自动处理固件)
+# 4. 增强的 WIFI 功能 (交由 target 自动处理)
 # ==========================================
 CONFIG_PACKAGE_kmod-ath11k=y
 CONFIG_PACKAGE_iwinfo=y
 CONFIG_PACKAGE_wireless-regdb=y
 
 # ==========================================
-# 6. 高通 NSS 硬件加速
+# 5. 高通 NSS 硬件加速
 # ==========================================
 CONFIG_PACKAGE_kmod-qca-nss-drv=y
 CONFIG_PACKAGE_kmod-qca-nss-ecm=y
@@ -61,7 +71,7 @@ CONFIG_PACKAGE_kmod-qca-nss-drv-vlan-mgr=y
 CONFIG_PACKAGE_kmod-qca-nss-crypto=y
 
 # ==========================================
-# 7. 防火墙与网络核心 (强制使用 Firewall4)
+# 6. 防火墙与网络核心
 # ==========================================
 CONFIG_PACKAGE_firewall4=y
 CONFIG_PACKAGE_luci-app-firewall4=y
@@ -74,7 +84,7 @@ CONFIG_PACKAGE_kmod-nft-bridge=y
 CONFIG_PACKAGE_kmod-nft-xfrm=y
 
 # ==========================================
-# 8. 常用插件 (使用原生 wol，防报错)
+# 7. 常用插件
 # ==========================================
 CONFIG_PACKAGE_luci-app-zerotier=y
 CONFIG_PACKAGE_zerotier=y
@@ -91,7 +101,7 @@ CONFIG_PACKAGE_autocore=y
 CONFIG_PACKAGE_automount=y
 
 # ==========================================
-# 9. 存储支持 (USB & eMMC)
+# 8. 存储支持
 # ==========================================
 CONFIG_PACKAGE_kmod-mmc=y
 CONFIG_PACKAGE_kmod-sdhci=y
