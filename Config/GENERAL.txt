@@ -1,32 +1,16 @@
 # ==========================================
-# 【核心修复】开启多设备全量编译 (防止设备ID不匹配)
-# ==========================================
-CONFIG_TARGET_qualcommax=y
-CONFIG_TARGET_qualcommax_ipq60xx=y
-# 【关键】：开启多设备编译，把 ipq60xx 下所有设备（包括雅典娜）全编一遍
-CONFIG_TARGET_MULTI_PROFILE=y
-CONFIG_TARGET_PER_DEVICE_ROOTFS=y
-# 【关键】：同时开启两种固件格式，确保无论什么设备都有文件输出
-CONFIG_TARGET_ROOTFS_SQUASHFS=y
-CONFIG_TARGET_ROOTFS_INITRAMFS=y
-
-# ==========================================
-# 【防冲突补丁】(剔除互斥包)
-# ==========================================
-# CONFIG_PACKAGE_luci-light is not set
-# CONFIG_PACKAGE_wpad-basic-mbedtls is not set
-# CONFIG_PACKAGE_wpad-basic-wolfssl is not set
-# CONFIG_PACKAGE_wpad-basic is not set
-# CONFIG_PACKAGE_dnsmasq is not set
-# CONFIG_PACKAGE_firewall is not set
-
-# ==========================================
 # 1. 基础编译参数与高通 IPQ60XX 优化
 # ==========================================
 CONFIG_CCACHE=y
 CONFIG_KERNEL_CC_OPTIMIZE_FOR_PERFORMANCE=y
 CONFIG_ATH11K_MEM_PROFILE_1G=y
 CONFIG_IPQ_MEM_PROFILE_1024=y
+CONFIG_TARGET_qualcommax=y
+CONFIG_TARGET_qualcommax_ipq60xx=y
+CONFIG_TARGET_MULTI_PROFILE=y
+CONFIG_TARGET_PER_DEVICE_ROOTFS=y
+CONFIG_TARGET_ROOTFS_SQUASHFS=y
+CONFIG_TARGET_ROOTFS_INITRAMFS=y
 
 # ==========================================
 # 2. 科学插件与主题
@@ -86,16 +70,16 @@ CONFIG_PACKAGE_kmod-nft-xfrm=y
 # ==========================================
 # 7. 常用插件
 # ==========================================
-CONFIG_PACKAGE_luci-app-zerotier=y
 CONFIG_PACKAGE_zerotier=y
+CONFIG_PACKAGE_luci-app-zerotier=y
+CONFIG_PACKAGE_luci-app-quickfile=y
 CONFIG_PACKAGE_luci-app-upnp=y
-CONFIG_PACKAGE_luci-app-cpufreq=y
 CONFIG_PACKAGE_luci-app-ttyd=y
 CONFIG_PACKAGE_luci-app-samba4=y
+CONFIG_PACKAGE_luci-app-cpufreq=y
 CONFIG_PACKAGE_luci-app-mini-diskmanager=y
 CONFIG_PACKAGE_htop=y
 CONFIG_PACKAGE_curl=y
-CONFIG_PACKAGE_openssh-sftp-server=y
 CONFIG_PACKAGE_ip-full=y
 CONFIG_PACKAGE_autocore=y
 CONFIG_PACKAGE_automount=y
