@@ -13,10 +13,12 @@ on:
         required: true
         type: string
       WRT_SSID:
-        required: true
+        required: false
+        default: 'OpenWrt'
         type: string
       WRT_WORD:
-        required: true
+        required: false
+        default: '12345678'
         type: string
       WRT_IP:
         required: true
@@ -242,7 +244,7 @@ jobs:
           fi
 
       - name: Release Firmware
-        uses: softprops/action-gh-release@master
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{env.WRT_CONFIG}}-${{env.WRT_INFO}}-${{env.WRT_BRANCH}}-${{env.WRT_DATE}}
           files: ./wrt/upload/*.*
@@ -266,6 +268,9 @@ jobs:
     needs: core
     if: ${{ !inputs.WRT_TEST && needs.core.result == 'success' }}
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: write
     concurrency:
       group: wrt-cache-rollover-${{github.ref}}-${{needs.core.outputs.cache_prefix}}
       cancel-in-progress: false
