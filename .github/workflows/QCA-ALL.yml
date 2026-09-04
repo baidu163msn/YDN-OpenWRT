@@ -42,10 +42,12 @@ jobs:
       WRT_CONFIG: ${{matrix.CONFIG}}
       WRT_THEME: argon
       WRT_NAME: WH
+      WRT_SSID: "OpenWrt"
+      WRT_WORD: "12345678"
       WRT_IP: 192.168.68.1
       WRT_PW: 无
       WRT_REPO: https://github.com/${{matrix.SOURCE}}.git
       WRT_BRANCH: ${{matrix.BRANCH}}
       WRT_SOURCE: ${{matrix.SOURCE}}
-      WRT_PACKAGE: ${{inputs.PACKAGE}}
-      WRT_TEST: ${{inputs.TEST}}
+      WRT_PACKAGE: ${{inputs.PACKAGE || ''}}
+      WRT_TEST: ${{inputs.TEST || false}}
